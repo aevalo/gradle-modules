@@ -1,0 +1,75 @@
+plugins {
+  // Apply the java Plugin to add support for Java.
+  id 'java'
+}
+
+// Set toolchain
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(11)
+    vendor = JvmVendorSpec.ADOPTIUM
+  }
+}
+
+tasks.withType(JavaCompile).configureEach {
+  //enable compilation in a separate daemon process
+  //options.fork = true
+  // Source and taget compatibility
+  sourceCompatibility = 11
+  targetCompatibility = 11
+  options.compilerArgs << "-Xlint:all" << "-Xdoclint:all"
+}
+repositories {
+  // Use Maven Central for resolving dependencies.
+  mavenCentral()
+}
+
+dependencies {
+  constraints {
+    implementation 'org.apache.commons:commons-text:1.9'
+    implementation 'com.typesafe:config:1.4.2'
+  }
+  testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+}
+
+tasks.named('test') {
+  // Use JUnit Platform for unit tests.
+  useJUnitPlatform()
+}
+
+test {
+  reports {
+    junitXml {
+      outputPerTestCase = true
+      mergeReruns = true
+    }
+  }
+}
+
+abstract class CustomTaskUsingToolchains extends DefaultTask {
+  @Nested
+  abstract Property<JavaLauncher> getLauncher()
+
+  CustomTaskUsingToolchains() {
+    def toolchain = project.extensions.getByType(JavaPluginExtension.class).toolchain
+    Provider<JavaLauncher> defaultLauncher = getJavaToolchainService().launcherFor(toolchain)
+    launcher.convention(defaultLauncher)
+  }
+
+  @TaskAction
+  def showConfiguredToolchain() {
+    println launcher.get().executablePath
+    println launcher.get().metadata.installationPath
+  }
+
+  @Inject
+  protected abstract JavaToolchainService getJavaToolchainService()
+}
+
+tasks.register('showDefaultToolchain', CustomTaskUsingToolchains)
+
+tasks.register('showCustomToolchain', CustomTaskUsingToolchains) {
+  launcher = javaToolchains.launcherFor {
+    languageVersion = JavaLanguageVersion.of(17)
+  }
+}

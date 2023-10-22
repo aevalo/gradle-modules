@@ -1,0 +1,13 @@
+plugins {
+  id 'gradle.modules.java-common-conventions'
+  id 'application'
+}
+
+application {
+  applicationDefaultJvmArgs = ['-Dgreeting.language=en']
+}
+
+distTar {
+  compression = Compression.GZIP
+  archiveExtension = "tar.gz"
+}

@@ -1,0 +1,7 @@
+plugins {
+  id 'gradle.modules.java-library-conventions'
+}
+
+dependencies {
+  implementation 'com.typesafe:config'
+}

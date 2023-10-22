@@ -1,6 +1,14 @@
+# Ignore Gradle project-specific cache directory
 .gradle
+
+# Ignore Gradle build output directory
+build
 **/build/
 !src/**/build/
+
+# Ignore Gradle binary output directory
+bin
+**/bin/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -19,3 +27,9 @@ gradle-app.setting
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+# IntelliJ IDEA
+.idea
+
+# Visual Studio Code
+.vscode

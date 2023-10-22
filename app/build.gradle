@@ -1,0 +1,13 @@
+plugins {
+  id 'gradle.modules.java-application-conventions'
+}
+
+dependencies {
+  implementation 'org.apache.commons:commons-text'
+  implementation project(':hello')
+}
+
+application {
+  // Define the main class for the application.
+  mainClass = 'com.baeldung.modules.main.MainApp'
+}
