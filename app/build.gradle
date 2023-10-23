@@ -8,6 +8,13 @@ dependencies {
 }
 
 application {
-  // Define the main class for the application.
+  mainModule = 'main.app' // name defined in module-info.java
   mainClass = 'com.baeldung.modules.main.MainApp'
+}
+
+version = '0.1.0'
+
+tasks.named('compileJava') {
+  // use the project's version or define one directly
+  options.javaModuleVersion = provider { version }
 }

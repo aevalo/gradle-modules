@@ -5,3 +5,10 @@ plugins {
 dependencies {
   implementation 'com.typesafe:config'
 }
+
+version = '0.1.0'
+
+tasks.named('compileJava') {
+  // use the project's version or define one directly
+  options.javaModuleVersion = provider { version }
+}
