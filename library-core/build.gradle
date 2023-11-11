@@ -1,0 +1,19 @@
+plugins {
+  id 'gradle.modules.java-application-conventions'
+}
+
+application {
+  mainModule = 'com.baeldung.library.core' // name defined in module-info.java
+  mainClass = 'com.baeldung.library.core.Main'
+}
+
+dependencies {
+  implementation 'com.typesafe:config'
+}
+
+version = '0.1.0'
+
+tasks.named('compileJava') {
+  // use the project's version or define one directly
+  options.javaModuleVersion = provider { version }
+}

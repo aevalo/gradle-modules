@@ -1,0 +1,22 @@
+plugins {
+  id 'gradle.modules.java-library-conventions'
+}
+
+dependencies {
+  implementation 'com.typesafe:config'
+  implementation project(':library-core')
+}
+
+version = '0.1.0'
+
+tasks.named('compileJava') {
+  // use the project's version or define one directly
+  options.javaModuleVersion = provider { version }
+}
+
+test {
+  def jdk_java_options = [
+    '--add-opens com.baeldung.library.core/com.baeldung.library.core=com.baeldung.library.test'
+  ]
+  environment('JDK_JAVA_OPTIONS', jdk_java_options.join('\n'))
+}

@@ -9,4 +9,4 @@
  */
 
 rootProject.name = 'gradle-modules'
-include('app', 'hello')
+include('app', 'hello', 'library-core', 'library-test')
